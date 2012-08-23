@@ -13,8 +13,8 @@ function loadDir(dir, regexp) {
     return files;
 }
 
-var styles = loadDir("styles/", /(.*)\.csl$/);
-    locales = loadDir("locales/", /locales-(.*)\.xml$/);
+var styles = loadDir(__dirname + "/../styles/", /(.*)\.csl$/);
+    locales = loadDir(__dirname + "/../locales/", /locales-(.*)\.xml$/);
 
 var engineCache = {};
 
