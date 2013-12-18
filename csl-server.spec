@@ -51,10 +51,11 @@ exit 0
 %post
 (
 cd /opt/%name &&
-/usr/local/bin/npm install jsbin &&
-/usr/local/bin/npm install connect &&
+npm install jsbin &&
+npm install connect &&
 mkdir -p /var/log/%{name}/ &&
 test -d /var/log/%{name}/ &&
+chown -R csl-server /var/log/%{name} &&
 chmod +x /etc/init.d/%{name} &&
 chkconfig --add %{name} && chkconfig --level 345 %{name} on && service %{name} start &&
 echo "service %{name} installed!"

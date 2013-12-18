@@ -12,7 +12,7 @@ PID_FILE="/var/run/$SCRIPT.pid"
 ps -fe | grep "$SCRIPT" | head -n1 | cut -d" " -f 6 > ${PID_FILE}
 
 USER="csl-server"
-NODE="/usr/local/bin/node"
+NODE="node"
 NODE_DIR="/opt/csl-server"
 NODE_APP="$NODE_DIR/src/server.js"
 LOG_FILE="/var/log/csl-server/csl-server.log"
