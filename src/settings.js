@@ -1,3 +1,9 @@
 var fs = require('fs');
-var file = fs.readFileSync(__dirname + '/../config.json', 'UTF-8');
-module.exports = JSON.parse(file);
+
+var config = { port: 8000 };
+var configPath = __dirname + '/../config.json';
+if (fs.exists(configPath)) {
+  config = JSON.parse(fs.readFileSync(configPath, 'UTF-8'));
+}
+
+module.exports = config;

@@ -5,7 +5,7 @@ Version: 0.1
 Release: X
 BuildArch: noarch
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-Requires: nodejs,npm
+Requires: nodejs,npm,shadow-utils
 Source: %{name}.tar.gz
 
 %description
@@ -39,6 +39,9 @@ rm -rf %{buildroot}
 %doc
 
 %pre
+getent group csl-server >/dev/null || groupadd -r csl-server
+getent passwd csl-server >/dev/null || useradd -r -g csl-server -s /sbin/nologin csl-server
+
 #in case of an upgrade (first installs new version, then deletes old version)
 has_service=$(chkconfig --list | grep %{name})
 if [ "$has_service" != "" ];then
