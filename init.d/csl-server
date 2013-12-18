@@ -15,7 +15,7 @@ USER="csl-server"
 NODE="/usr/local/bin/node"
 NODE_DIR="/opt/csl-server"
 NODE_APP="$NODE_DIR/src/server.js"
-LOG_FILE="/var/log/csl-server.log"
+LOG_FILE="/var/log/csl-server/csl-server.log"
 
 lock_file="/var/lock/subsys/$SCRIPT"
 

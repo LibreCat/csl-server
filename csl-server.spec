@@ -21,6 +21,7 @@ rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/opt/%{name}
 mkdir -p %{buildroot}/etc/init.d
+mkdir -p %{buildroot}/var/log/%{name}
 
 cp -r $RPM_BUILD_DIR/%{name}/* %{buildroot}/opt/%{name}/
 cp $RPM_BUILD_DIR/%{name}/init.d/%{name} %{buildroot}/etc/init.d/%{name}
@@ -52,6 +53,8 @@ exit 0
 cd /opt/%name &&
 /usr/local/bin/npm install jsbin &&
 /usr/local/bin/npm install connect &&
+mkdir -p /var/log/%{name}/ &&
+test -d /var/log/%{name}/ &&
 chmod +x /etc/init.d/%{name} &&
 chkconfig --add %{name} && chkconfig --level 345 %{name} on && service %{name} start &&
 echo "service %{name} installed!"
