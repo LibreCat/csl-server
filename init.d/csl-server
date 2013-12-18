@@ -7,9 +7,6 @@
 . /etc/rc.d/init.d/functions
 
 SCRIPT="$(basename $0)"
-PID_FILE="/var/run/$SCRIPT.pid"
-
-ps -fe | grep "$SCRIPT" | head -n1 | cut -d" " -f 6 > ${PID_FILE}
 
 USER="csl-server"
 NODE="node"
@@ -35,11 +32,8 @@ do_start()
 do_stop()
 {
         echo -n $"Stopping $NODE_APP: "
-        PID=`ps -fe | grep "$NODE $NODE_APP" | head -n1 | cut -d" " -f 2`
+        PID=`pidof $NODE $NODE_APP`
         kill -9 $PID > /dev/null 2>&1 && echo_success || echo_failure
-        if [ -f ${PID_FILE} ]; then
-        rm ${PID_FILE}
-        fi
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && rm -f $lock_file
