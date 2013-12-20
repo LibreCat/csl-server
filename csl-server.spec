@@ -40,7 +40,9 @@ rm -rf %{buildroot}
 
 %pre
 getent group csl-server >/dev/null || groupadd -r csl-server
-getent passwd csl-server >/dev/null || useradd -r -g csl-server -s /sbin/nologin csl-server
+getent passwd csl-server >/dev/null || \
+  useradd -r -g csl-server -d /home/csl-server -s /sbin/nologin \
+  -c "CSL server user" csl-server
 
 #in case of an upgrade (first installs new version, then deletes old version)
 has_service=$(chkconfig --list | grep %{name})
