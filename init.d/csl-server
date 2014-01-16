@@ -20,7 +20,7 @@ do_start()
 {
         if [ ! -f "$lock_file" ] ; then
                 echo -n $"Starting $NODE_APP: "
-                runuser -l "$USER" -c "$NODE $NODE_APP >> $LOG_FILE &" && echo_success || echo_failure
+                runuser -l "$USER" -s /bin/sh -c "$NODE $NODE_APP >> $LOG_FILE &" && echo_success || echo_failure
                 RETVAL=$?
                 echo
                 [ $RETVAL -eq 0 ] && touch $lock_file
