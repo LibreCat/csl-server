@@ -22,6 +22,7 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/opt/%{name}
 mkdir -p %{buildroot}/etc/init.d
 mkdir -p %{buildroot}/var/log/%{name}
+mkdir -p %{buildroot}/home/%{name}
 
 cp -r $RPM_BUILD_DIR/%{name}/* %{buildroot}/opt/%{name}/
 cp $RPM_BUILD_DIR/%{name}/init.d/%{name} %{buildroot}/etc/init.d/%{name}
@@ -39,10 +40,9 @@ rm -rf %{buildroot}
 %doc
 
 %pre
-getent group csl-server >/dev/null || groupadd -r csl-server
-getent passwd csl-server >/dev/null || \
-  useradd -r -g csl-server -d /home/csl-server -s /sbin/nologin \
-  -c "CSL server user" csl-server
+getent group %{name} >/dev/null || groupadd -r %{name}
+getent passwd %{name} >/dev/null || useradd -r -g %{name} \
+    -d /home/%{name} -s /sbin/nologin -c "CSL server user" %{name}
 
 #in case of an upgrade (first installs new version, then deletes old version)
 has_service=$(chkconfig --list | grep %{name})
