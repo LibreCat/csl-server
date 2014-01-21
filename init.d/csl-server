@@ -18,14 +18,13 @@ COMMAND="$NODE $NODE_APP"
 do_start()
 {
         if [ ! -f "$lock_file" ] ; then
-                touch $lock_file
                 echo -n $"Starting $SCRIPT: "
                 runuser -l "$USER" -s /bin/sh -c "$COMMAND >> $LOG_FILE &"
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ]; then
+                  touch $lock_file
                   echo_success
                 else
-                  rm -f $lock_file
                   echo_failure
                 fi
                 echo
