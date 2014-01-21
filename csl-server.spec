@@ -60,9 +60,7 @@ exit 0
 cd /opt/%name &&
 npm install jsbin &&
 npm install connect &&
-mkdir -p /var/log/%{name}/ &&
 test -d /var/log/%{name}/ &&
-chown -R csl-server:csl-server /var/log/%{name} &&
 chmod +x /etc/init.d/%{name} &&
 chkconfig --add %{name} && chkconfig --level 345 %{name} on && service %{name} start &&
 echo "service %{name} installed!"
@@ -72,6 +70,7 @@ echo "service %{name} installed!"
 if [ "$1" = 0 ] ; then
   service %{name} stop &> /dev/null
   chkconfig --del %{name} &> /dev/null
+  /usr/sbin/userdel -r %{name} &> /dev/null
   echo "service %{name} removed"
 fi
 exit 0
