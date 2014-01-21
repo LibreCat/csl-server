@@ -13,17 +13,19 @@ NODE="node"
 NODE_DIR="/opt/csl-server"
 NODE_APP="$NODE_DIR/src/server.js"
 LOG_FILE="/var/log/csl-server/csl-server.log"
+COMMAND="$NODE $NODE_APP"
 
 do_start()
 {
         if [ ! -f "$lock_file" ] ; then
+                touch $lock_file
                 echo -n $"Starting $SCRIPT: "
-                runuser -l "$USER" -s /bin/sh -c "$NODE $NODE_APP >> $LOG_FILE &"
+                runuser -l "$USER" -s /bin/sh -c "$COMMAND >> $LOG_FILE &"
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ]; then
-                  touch $lock_file
                   echo_success
                 else
+                  rm -f $lock_file
                   echo_failure
                 fi
                 echo
@@ -36,7 +38,7 @@ do_start()
 do_stop()
 {
         echo -n $"Stopping $SCRIPT: "
-        pkill -9 -fx "$NODE $NODE_APP" > /dev/null 2>&1
+        pkill -9 -fx "$COMMAND" > /dev/null 2>&1
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
           rm -f $lock_file
@@ -49,16 +51,13 @@ do_stop()
 
 do_status()
 {
-        PID=`pgrep -fx "$NODE $NODE_APP"`
+        PID=`pgrep -fx "$COMMAND"`
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
           echo "$SCRIPT is running"
-          success
         else
           echo "$SCRIPT is not running"
-          failure
         fi
-        echo
 }
 
 case "$1" in
