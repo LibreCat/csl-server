@@ -19,24 +19,39 @@ lock_file="/var/lock/subsys/$SCRIPT"
 do_start()
 {
         if [ ! -f "$lock_file" ] ; then
-                echo -n $"Starting $NODE_APP: "
+                echo -n $"Starting $SCRIPT: "
                 runuser -l "$USER" -s /bin/sh -c "$NODE $NODE_APP >> $LOG_FILE &" && echo_success || echo_failure
                 RETVAL=$?
                 echo
                 [ $RETVAL -eq 0 ] && touch $lock_file
         else
-                echo "$NODE_APP is locked."
+                echo "$SCRIPT is locked."
                 RETVAL=1
         fi
 }
+
 do_stop()
 {
-        echo -n $"Stopping $NODE_APP: "
+        echo -n $"Stopping $SCRIPT: "
         PID=`pidof $NODE $NODE_APP`
         kill -9 $PID > /dev/null 2>&1 && echo_success || echo_failure
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && rm -f $lock_file
+}
+
+do_status()
+{
+        `pidof $NODE $NODE_APP`
+        RETVAL=$?
+        if [ $RETVAL -eq 0 ]; then
+          echo "$SCRIPT is running"
+          success
+          echo
+        else
+          echo "$SCRIPT is not running"
+          failure
+        fi
 }
 
 case "$1" in
@@ -50,8 +65,11 @@ case "$1" in
                 do_stop
                 do_start
                 ;;
+        status)
+                do_status
+                ;;
         *)
-                echo "Usage: $0 {start|stop|restart}"
+                echo "Usage: $0 {start|stop|restart|status}"
                 RETVAL=1
 esac
 
