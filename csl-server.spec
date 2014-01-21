@@ -36,6 +36,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /opt/%{name}/
 /etc/init.d/%{name}
+/var/log/%{name}
+/home/%{name}
 
 %doc
 
