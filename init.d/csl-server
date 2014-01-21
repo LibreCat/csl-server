@@ -42,7 +42,7 @@ do_stop()
 
 do_status()
 {
-        `pidof $NODE $NODE_APP`
+        PID=`pidof $NODE $NODE_APP`
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
           echo "$SCRIPT is running"
