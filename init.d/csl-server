@@ -21,7 +21,7 @@ do_start()
 {
         if [ ! -f "$lock_file" ] ; then
                 echo -n $"Starting $SCRIPT: "
-                runuser -l "$USER" -s /bin/sh -c "$COMMAND >> $LOG_FILE &"
+                runuser -l "$USER" -s /bin/sh -c "$COMMAND" >> $LOG_FILE &
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ]; then
                   touch $lock_file
