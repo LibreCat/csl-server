@@ -35,7 +35,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /opt/%{name}/
 %attr(755, -, -) /etc/init.d/%{name}
-%attr(644, %{name}, csl-server) /var/log/%{name}
+%attr(744, %{name}, csl-server) /var/log/%{name}
 
 %doc
 
@@ -56,9 +56,8 @@ exit 0
 (
 cd /opt/%name &&
 npm install jsbin connect &&
-test -d /var/log/%{name}/ &&
-chmod +x /etc/init.d/%{name} &&
-chkconfig --add %{name} && chkconfig --level 345 %{name} on && service %{name} start &&
+chkconfig --add %{name} && chkconfig --level 345 %{name} on &&
+service %{name} start &&
 echo "service %{name} installed!"
 ) || exit 1
 
