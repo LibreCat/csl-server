@@ -55,8 +55,7 @@ exit 0
 %post
 (
 cd /opt/%name &&
-npm install jsbin &&
-npm install connect &&
+npm install jsbin connect &&
 test -d /var/log/%{name}/ &&
 chmod +x /etc/init.d/%{name} &&
 chkconfig --add %{name} && chkconfig --level 345 %{name} on && service %{name} start &&
