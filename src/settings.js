@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var config = { port: 8000 };
+var config = { port: 8888 };
 var configPath = __dirname + '/../config.json';
 
 if (fs.existsSync(configPath)) {
