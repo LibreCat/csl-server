@@ -3,7 +3,7 @@ Summary: node.js based Citation Style Language service
 License: bsd
 Version: 0.1
 Release: X
-BuildArch: noarch
+BuildArch: x86_64
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires: nodejs,npm,shadow-utils
 Source: %{name}.tar.gz
