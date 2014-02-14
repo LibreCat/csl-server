@@ -55,7 +55,6 @@ exit 0
 %post
 (
 cd /opt/%name &&
-npm install jsbin connect &&
 chkconfig --add %{name} && chkconfig --level 345 %{name} on &&
 service %{name} start &&
 echo "service %{name} installed!"
